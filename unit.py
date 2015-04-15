@@ -4,7 +4,9 @@
 class Unit:
     def __init__(self, health, mana):
         self.health = health
+        self._max_health = health
         self.mana = mana
+        self._max_mana = mana
 
     def get_health(self):
         return self.health
@@ -14,3 +16,19 @@ class Unit:
 
     def is_alive(self):
         return 0 != self.health
+
+    def take_healing(self, health_points):
+        """
+            If our hero is dead, the method should return False. It's too late
+            to heal our hero. We cannot heal our hero above the maximum health,
+            which is given by health If healing is successful (Our hero is not
+            dead), the method should return True
+        """
+        if 0 == self.health:
+            return False
+
+        self.health += health_points
+        if self.health > self._max_health:
+            self.health = self._max_health
+
+        return True

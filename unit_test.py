@@ -21,5 +21,13 @@ class unit_test(unittest.TestCase):
         self.unit.health = 0
         self.assertFalse(self.unit.is_alive())
 
+    def test_healing(self):
+        self.unit.health = 0
+        self.assertFalse(self.unit.take_healing(30))
+        self.unit.health = 50
+        self.unit.take_healing(100)
+        self.assertEqual(self.unit.health, 100)
+
+
 if __name__ == '__main__':
     unittest.main()
