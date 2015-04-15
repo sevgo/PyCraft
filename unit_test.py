@@ -11,5 +11,8 @@ class unit_test(unittest.TestCase):
         self.assertEqual(self.unit.health, 100)
         self.assertEqual(self.unit.mana, 100)
 
+    def test_get_health(self):
+        self.assertEqual(self.unit.get_health(), 100)
+
 if __name__ == '__main__':
     unittest.main()
