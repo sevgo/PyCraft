@@ -6,3 +6,6 @@ class Unit:
 
     def get_health(self):
         return self.health
+
+    def get_mana(self):
+        return self.mana
