@@ -17,5 +17,9 @@ class unit_test(unittest.TestCase):
     def test_get_mana(self):
         self.assertEqual(self.unit.get_mana(), 100)
 
+    def test_is_alive(self):
+        self.unit.health = 0
+        self.assertFalse(self.unit.is_alive())
+
 if __name__ == '__main__':
     unittest.main()
