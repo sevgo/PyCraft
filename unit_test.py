@@ -11,5 +11,10 @@ class unit_test(unittest.TestCase):
         self.assertEqual(self.unit.health, 100)
         self.assertEqual(self.unit.mana, 100)
 
+    def test_is_alive(self):
+        self.unit.health = 0
+        self.assertFalse(self.unit.is_alive())
+
+
 if __name__ == '__main__':
     unittest.main()
