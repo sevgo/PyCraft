@@ -29,7 +29,6 @@ class unit_test(unittest.TestCase):
         self.assertEqual(self.unit.health, 100)
 
     def test_take_mana(self):
-        mana_points = 50
         self.unit.take_mana(100)
         self.assertEqual(self.unit.mana, 100)
 
