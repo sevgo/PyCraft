@@ -5,7 +5,12 @@ import os
 
 class dungeon_test(unittest.TestCase):
     def setUp(self):
-        self.dungeon_map = [['#', '#'], ['#', '#']]
+        self.dungeon_map = [
+            ['S', '.', '#', '#', '.', '.', '.', '.', '.', 'T'],
+            ['#', 'T', '#', '#', '.', '.', '#', '#', '#', '.'],
+            ['#', '.', '#', '#', '#', 'E', '#', '#', '#', 'E'],
+            ['#', '.', 'E', '.', '.', '.', '#', '#', '#', '.'],
+            ['#', '#', '#', 'T', '#', '#', '#', '#', '#', 'G']]
         f = open('test_level.txt', 'w')
         for line in self.dungeon_map:
             f.write(''.join(line) + '\n')
