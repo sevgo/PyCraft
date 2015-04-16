@@ -75,3 +75,8 @@ class Unit:
             return self.spell.damage
 
         return 0
+
+    def take_damage(self, damage_points):
+        self.health -= damage_points
+        if self.health < 0:
+            self.health = 0

@@ -61,6 +61,12 @@ class unit_test(unittest.TestCase):
         self.unit.learn(spell)
         self.assertEqual(self.unit.attack(by="spell"), 100)
 
+    def test_take_damage(self):
+        self.unit.take_damage(20)
+        self.assertEqual(self.unit.health, 80)
+        self.unit.take_damage(90)
+        self.assertEqual(self.unit.health, 0)
+
 
 if __name__ == '__main__':
     unittest.main()
