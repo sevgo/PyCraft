@@ -65,3 +65,13 @@ class Unit:
 
     def learn(self, spell):
         self.spell = spell
+
+    def attack(self, by):
+        if by.lower() == "weapon" and self.weapon:
+            return self.weapon.damage
+
+        # TODO add test for self.can_cast()
+        if by.lower() == "spell" and self.spell:
+            return self.spell.damage
+
+        return 0

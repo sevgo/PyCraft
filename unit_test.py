@@ -48,6 +48,18 @@ class unit_test(unittest.TestCase):
         self.unit.learn(spell)
         self.assertEqual(self.unit.spell, spell)
 
+    def test_attack_by_weapon(self):
+        weapon = Weapon("Weapon name", 20)
+        self.assertEqual(self.unit.attack(by="weapon"), 0)
+        self.unit.equip(weapon)
+        self.assertEqual(self.unit.attack(by="weapon"), 20)
+
+    def test_attack_by_spell(self):
+        spell = Spell("Spell name", 100, 50, 3)
+        self.assertEqual(self.unit.attack(by="spell"), 0)
+        self.unit.learn(spell)
+        self.assertEqual(self.unit.attack(by="spell"), 100)
+
 
 if __name__ == '__main__':
     unittest.main()
