@@ -23,6 +23,10 @@ class dungeon_test(unittest.TestCase):
     def test_init(self):
         self.assertEqual(self.dungeon.dungeon_map, self.dungeon_map)
 
+    def test_find_item_coordinates(self):
+        self.assertEqual(self.dungeon._find_item_coordinates('S'), (0, 0))
+        self.assertEqual(self.dungeon._find_item_coordinates('G'), (4, 9))
+
 
 if __name__ == '__main__':
     unittest.main()
