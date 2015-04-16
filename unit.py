@@ -38,7 +38,7 @@ class Unit:
 
         return True
 
-    def take_mana(self, mana_points, moved=False):
+    def take_mana(self, mana_points=0, moved=False):
         """
         Each time he makes a move, his mana is increased by
             mana_regeneration_rate amount which is 0 for Enemy Unit.
@@ -46,15 +46,10 @@ class Unit:
             of mana points the potion have.
         It's mana cannot go above the start mana given to him, neither he can
         go down below 0 mana. """
-        new_mana = 0
-        # We check if this method is called by Hero or Enemy
-        # If it is Hero who call that method, mana_regeneration_rate is
-        # different from 0
         if moved:
-            new_mana += self.mana_renegeration_rate
+            mana_points += self.mana_regeneration
 
-        new_mana += mana_points
-        self.mana += new_mana
+        self.mana += mana_points
         if self.mana > self._max_mana:
             self.mana = self._max_mana
 

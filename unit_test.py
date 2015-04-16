@@ -34,7 +34,10 @@ class unit_test(unittest.TestCase):
         self.assertEqual(self.unit.health, 100)
 
     def test_take_mana(self):
-        self.unit.take_mana(100)
+        self.unit.mana = 0
+        self.unit.take_mana(moved=True)
+        self.assertEqual(self.unit.mana, 5)
+        self.unit.take_mana(120)
         self.assertEqual(self.unit.mana, 100)
 
     def test_equip_weapon(self):
