@@ -62,14 +62,20 @@ class Unit:
         self.spell = spell
 
     def attack(self, by):
-        if by.lower() == "weapon" and self.weapon:
-            return self.weapon.damage
+        spell = self.spell.damage
+        weapon = self.weapon.damage
 
-        # TODO add test for self.can_cast()
-        if by.lower() == "spell" and self.spell:
-            return self.spell.damage
+        if by is None and self.can_cast():
+            attack = spell if spell > weapon else weapon
+        elif by.lower() == "weapon" and self.weapon:
+            attack = weapon
+        elif by.lower() == "spell" and self.spell and self.can_cast():
+            attack = spell
+            self.mana -= spell
+        else:
+            attack = self.damage
 
-        return 0
+        return attack
 
     def take_damage(self, damage_points):
         self.health -= damage_points
