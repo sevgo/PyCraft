@@ -33,6 +33,14 @@ class dungeon_test(unittest.TestCase):
         self.dungeon.spawn(hero)
         self.assertEqual(self.dungeon.dungeon_map[0][0], 'H')
 
+    def test_prin_map(self):
+        map_string = """S.##.....T
+#T##..###.
+#.###E###E
+#.E...###.
+###T#####G"""
+        self.assertEqual(self.dungeon.print_map(), map_string)
+
 
 if __name__ == '__main__':
     unittest.main()

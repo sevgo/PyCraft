@@ -11,8 +11,7 @@ class Dungeon:
                 return (i, self.dungeon_map[i].index(item))
 
     def print_map(self):
-        for row in self.dungeon_map:
-            print(''.join(row))
+        return '\n'.join([''.join(x) for x in self.dungeon_map])
 
     def spawn(self, hero):
         spawn_location = self._find_item_coordinates('S')
@@ -20,4 +19,4 @@ class Dungeon:
 
 if __name__ == '__main__':
     dungeon = Dungeon('level1.txt')
-    dungeon.print_map()
+    print(dungeon.print_map())
