@@ -26,7 +26,7 @@ class dungeon_test(unittest.TestCase):
 
     def test_find_item_coordinates(self):
         self.assertEqual(self.dungeon._find_item_coordinates('S'), (0, 0))
-        self.assertEqual(self.dungeon._find_item_coordinates('G'), (4, 9))
+        self.assertEqual(self.dungeon._find_item_coordinates('G'), (9, 4))
 
     def test_spawn(self):
         hero = Unit(100, 100, 5)
