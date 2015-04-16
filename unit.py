@@ -71,9 +71,11 @@ class Unit:
             attack = weapon
         elif by.lower() == "spell" and self.spell and self.can_cast():
             attack = spell
-            self.mana -= spell
         else:
             attack = self.damage
+
+        if attack == spell:
+            self.mana -= spell
 
         return attack
 
