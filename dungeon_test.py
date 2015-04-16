@@ -41,6 +41,13 @@ class dungeon_test(unittest.TestCase):
 ###T#####G"""
         self.assertEqual(self.dungeon.print_map(), map_string)
 
+    def test_move_hero(self):
+        hero = Unit(100, 100, 5)
+        self.dungeon.spawn(hero)
+        self.assertFalse(self.dungeon.move_hero('up'))
+        self.assertTrue(self.dungeon.move_hero('down'))
+        self.assertEqual(self.dungeon.hero_possition, (0, 1))
+
 
 if __name__ == '__main__':
     unittest.main()
