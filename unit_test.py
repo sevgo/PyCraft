@@ -2,6 +2,7 @@
 import unittest
 from unit import Unit
 from weapon import Weapon
+from spell import Spell
 
 
 class unit_test(unittest.TestCase):
@@ -24,7 +25,7 @@ class unit_test(unittest.TestCase):
         self.unit.health = 0
         self.assertFalse(self.unit.is_alive())
 
-    def test_healing(self):
+    def test_take_healing(self):
         self.unit.health = 0
         self.assertFalse(self.unit.take_healing(30))
         self.unit.health = 50
@@ -40,6 +41,12 @@ class unit_test(unittest.TestCase):
         self.assertEqual(self.unit.weapon, None)
         self.unit.equip(weapon)
         self.assertEqual(self.unit.weapon, weapon)
+
+    def test_learn_spell(self):
+        spell = Spell("Spell name", 100, 50, 3)
+        self.assertEqual(self.unit.spell, None)
+        self.unit.learn(spell)
+        self.assertEqual(self.unit.spell, spell)
 
 
 if __name__ == '__main__':
