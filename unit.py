@@ -10,6 +10,7 @@ class Unit:
         self.mana = mana
         self._max_mana = mana
         self.mana_regeneration = mana_regeneration_rate
+        self.weapon = None
 
     def get_health(self):
         return self.health
@@ -57,3 +58,6 @@ class Unit:
             self.mana = self._max_mana
 
         return True
+
+    def equip(self, weapon):
+        self.weapon = weapon
