@@ -24,7 +24,7 @@ class unit_test(unittest.TestCase):
         self.unit.health = 0
         self.assertFalse(self.unit.is_alive())
 
-    def test_healing(self):
+    def test_take_healing(self):
         self.unit.health = 0
         self.assertFalse(self.unit.take_healing(30))
         self.unit.health = 50
