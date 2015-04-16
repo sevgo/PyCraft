@@ -61,23 +61,27 @@ class Unit:
     def learn(self, spell):
         self.spell = spell
 
+    def __reduce_mana(self, reduce_mana_by):
+        self.mana -= reduce_mana_by
+
     def attack(self, by):
-        spell = self.spell.damage
-        weapon = self.weapon.damage
+        spell = self.spell
+        weapon = self.weapon
 
         if by is None and self.can_cast():
-            attack = spell if spell > weapon else weapon
+            attack = spell if spell.damage > weapon.damage else weapon
+            if attack == spell:
+                self.__reduce_mana(attack.mana_cost)
+
+            return attack.damage
         elif by.lower() == "weapon" and self.weapon:
-            attack = weapon
+            return weapon.damage
         elif by.lower() == "spell" and self.spell and self.can_cast():
             attack = spell
-        else:
-            attack = self.damage
+            self.__reduce_mana(attack.mana_cost)
+            return attack.damage
 
-        if attack == spell:
-            self.mana -= spell
-
-        return attack
+        return self.damage
 
     def take_damage(self, damage_points):
         self.health -= damage_points
