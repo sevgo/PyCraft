@@ -69,12 +69,13 @@ class Unit:
         spell = self.spell
         weapon = self.weapon
 
-        if by is None and self.can_cast():
-            attack = spell if spell.damage > weapon.damage else weapon
-            if attack == spell:
-                self.__reduce_mana(attack.mana_cost)
+        if by is None:
+            if self.can_cast():
+                attack = spell if spell.damage > weapon.damage else weapon
+                if attack == spell:
+                    self.__reduce_mana(attack.mana_cost)
 
-            return attack.damage
+                return attack.damage
         elif by.lower() == "weapon" and self.weapon:
             return weapon.damage
         elif by.lower() == "spell" and self.spell and self.can_cast():
