@@ -69,6 +69,12 @@ class dungeon_test(unittest.TestCase):
         self.dungeon._found_treasure('spell')
         self.assertNotEqual(hero.spell, None)
 
+    def test_create_enemy(self):
+        enemy = self.dungeon._create_enemy(100, 100, 100)
+        self.assertEqual(enemy.health, 100)
+        self.assertEqual(enemy.mana, 100)
+        self.assertEqual(enemy.damage, 100)
+
 
 if __name__ == '__main__':
     unittest.main()
