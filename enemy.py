@@ -5,5 +5,5 @@ from unit import Unit
 class Enemy(Unit):
 
     def __init__(self, health=50, mana=45, damage=10):
-        super(Enemy, self).__init__()
+        super().__init__(health, mana)
         self.damage = damage
