@@ -45,8 +45,15 @@ class dungeon_test(unittest.TestCase):
         hero = Unit(100, 100, 5)
         self.dungeon.spawn(hero)
         self.assertFalse(self.dungeon.move_hero('up'))
+        self.assertTrue(self.dungeon.move_hero('rigth'))
         self.assertTrue(self.dungeon.move_hero('down'))
-        self.assertEqual(self.dungeon.hero_possition, (0, 1))
+        self.assertTrue(self.dungeon.move_hero('down'))
+        self.assertEqual(self.dungeon.hero_possition, (2, 1))
+        self.assertEqual(self.dungeon.dungeon_map[1][1], '.')
+        self.dungeon_map[0][0] = '.'
+        self.dungeon_map[1][1] = '.'
+        self.dungeon_map[2][1] = 'H'
+        self.assertEqual(self.dungeon.dungeon_map, self.dungeon_map)
 
 
 if __name__ == '__main__':
