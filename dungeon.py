@@ -1,3 +1,8 @@
+from weapon import Weapon
+from spell import Spell
+import random
+
+
 class Dungeon:
     def __init__(self, level_file):
         f = open(level_file, "r")
@@ -5,6 +10,9 @@ class Dungeon:
         f.close()
         self.dungeon_map = [list(x.rstrip('\n')) for x in dungeon_list]
         self.hero_possition = None
+        self.treasures = ['mana', 'health', 'weapon', 'spell']
+        self.weapon_names = ['weapon name']
+        self.spell_names = ['spell name']
 
     def _find_item_coordinates(self, item):
         for i in range(len(self.dungeon_map)):
@@ -15,6 +23,7 @@ class Dungeon:
         return '\n'.join([''.join(x) for x in self.dungeon_map])
 
     def spawn(self, hero):
+        self.hero = hero
         spawn_location = self._find_item_coordinates('S')
         self.dungeon_map[spawn_location[0]][spawn_location[1]] = 'H'
         self.hero_possition = spawn_location
@@ -27,15 +36,29 @@ class Dungeon:
         if (new_possition[0] >= 0 and new_possition[1] >= 0
             and self.dungeon_map[new_possition[0]][new_possition[1]] not in ['#', 'E']):
             if self.dungeon_map[new_possition[0]][new_possition[1]] == 'T':
-                self._found_treasure()
+                treasure = random.choice(self.treasures)
+                self._found_treasure(treasure)
             self.dungeon_map[self.hero_possition[0]][self.hero_possition[1]] = '.'
             self.dungeon_map[new_possition[0]][new_possition[1]] = 'H'
             self.hero_possition = tuple(new_possition)
             return True
         return False
 
-    def _found_treasure(self):
-        pass
+    def _found_treasure(self, treasure):
+        if treasure == 'mana':
+            self.hero.take_mana(random.randint(10, 50))
+        if treasure == 'health':
+            self.hero.take_healing(random.randint(10, 50))
+        if treasure == 'weapon':
+            name = random.choice(self.weapon_names)
+            damage = random.randint(10, 50)
+            self.hero.equip(Weapon(name, damage))
+        if treasure == 'spell':
+            name = random.choice(self.spell_names)
+            damage = random.randint(10, 50)
+            cost = random.randint(int(0.5 * damage), int(0.7 * damage))
+            cast_range = random.randint(2, 4)
+            self.hero.learn(Spell(name, damage, cost, cast_range))
 
 
 if __name__ == '__main__':

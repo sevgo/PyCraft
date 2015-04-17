@@ -55,6 +55,20 @@ class dungeon_test(unittest.TestCase):
         self.dungeon_map[2][1] = 'H'
         self.assertEqual(self.dungeon.dungeon_map, self.dungeon_map)
 
+    def test_found_treasure(self):
+        hero = Unit(100, 100, 5)
+        hero.health = 1
+        hero.mana = 1
+        self.dungeon.spawn(hero)
+        self.dungeon._found_treasure('mana')
+        self.assertGreater(hero.mana, 1)
+        self.dungeon._found_treasure('health')
+        self.assertGreater(hero.health, 1)
+        self.dungeon._found_treasure('weapon')
+        self.assertNotEqual(hero.weapon, None)
+        self.dungeon._found_treasure('spell')
+        self.assertNotEqual(hero.spell, None)
+
 
 if __name__ == '__main__':
     unittest.main()
