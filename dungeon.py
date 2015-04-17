@@ -1,5 +1,6 @@
 from weapon import Weapon
 from spell import Spell
+from enemy import Enemy
 import random
 
 
@@ -59,3 +60,9 @@ class Dungeon:
             cost = random.randint(int(0.5 * damage), int(0.7 * damage))
             cast_range = random.randint(2, 4)
             self.hero.learn(Spell(name, damage, cost, cast_range))
+
+    def _create_enemy(self):
+        health = random.randint(10, 50)
+        mana = random.randint(10, 40)
+        damage = random.randint(5, 15)
+        return Enemy(health, mana, damage)
