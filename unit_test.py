@@ -52,10 +52,28 @@ class unit_test(unittest.TestCase):
         self.unit.learn(spell)
         self.assertEqual(self.unit.spell, spell)
 
-    def test_attack_without_argument(self):
-        spell = Spell("S", 100, 20, 5)
-        weapon = Weapon('W', 50)
+    def test_attack_without_weapon_or_spell(self):
         self.assertEqual(self.unit.attack(), 0)
+
+    def test_attack_with_better_weapon(self):
+        spell = Spell("S", 10, 20, 5)
+        weapon = Weapon('W', 50)
+        self.unit.learn(spell)
+        self.unit.equip(weapon)
+        self.assertEqual(self.unit.attack(), 50)
+
+    def test_attack_with_equal_weapon_and_spell(self):
+        spell = Spell("S", 50, 50, 5)
+        weapon = Weapon('W', 50)
+        self.unit.learn(spell)
+        self.unit.equip(weapon)
+        self.assertEqual(self.unit.attack(), 50)
+        self.assertEqual(self.unit.mana, 50)
+
+    def test_cant_attack_with_weapon_from_distance(self):
+        weapon = Weapon('W', 50)
+        self.unit.equip(weapon)
+        self.assertEqual(self.unit.attack(distance=2), 0)
 
     def test_attack_by_weapon(self):
         weapon = Weapon("Weapon name", 20)
