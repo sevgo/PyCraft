@@ -31,10 +31,11 @@ class Dungeon:
     def move_hero(self, direction):
         directions = {'up': (-1, 0), 'down': (1, 0),
                       'left': (0, -1), 'rigth': (0, 1)}
-        new_possition = list(map( sum, zip(*[self.hero_possition, directions[direction]])))
+        new_possition = list(map(sum, zip(*[self.hero_possition, directions[direction]])))
 
         if (new_possition[0] >= 0 and new_possition[1] >= 0
-            and self.dungeon_map[new_possition[0]][new_possition[1]] not in ['#', 'E']):
+                and self.dungeon_map[new_possition[0]][new_possition[1]] 
+                not in ['#', 'E']):
             if self.dungeon_map[new_possition[0]][new_possition[1]] == 'T':
                 treasure = random.choice(self.treasures)
                 self._found_treasure(treasure)
