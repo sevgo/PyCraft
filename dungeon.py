@@ -1,6 +1,7 @@
 from weapon import Weapon
 from spell import Spell
 from enemy import Enemy
+from fight import Fight
 import random
 
 
@@ -42,6 +43,8 @@ class Dungeon:
             self.dungeon_map[self.hero_possition[0]][self.hero_possition[1]] = '.'
             self.dungeon_map[new_possition[0]][new_possition[1]] = 'H'
             self.hero_possition = tuple(new_possition)
+            if self.dungeon_map[new_possition[0]][new_possition[1]] == 'E':
+                self._start_fight()
             return True
         return False
 
@@ -66,3 +69,6 @@ class Dungeon:
         mana = random.randint(10, 40)
         damage = random.randint(5, 15)
         return Enemy(health, mana, damage)
+
+    def _start_fight(self):
+        Fight(self.hero, self._create_enemy())
