@@ -11,6 +11,7 @@ class Test_Enemy(unittest.TestCase):
         self.assertIsInstance(self.henry, Enemy)
         self.assertTrue(self.henry.mana == 45)
         self.assertEqual(self.henry.mana_regeneration, 0)
+        self.assertEqual(self.henry.damage, 20)
 
 
 if __name__ == "__main__":
