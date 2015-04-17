@@ -52,6 +52,11 @@ class unit_test(unittest.TestCase):
         self.unit.learn(spell)
         self.assertEqual(self.unit.spell, spell)
 
+    def test_attack_without_argument(self):
+        spell = Spell("S", 100, 20, 5)
+        weapon = Weapon('W', 50)
+        self.assertEqual(self.unit.attack(), 0)
+
     def test_attack_by_weapon(self):
         weapon = Weapon("Weapon name", 20)
         self.assertEqual(self.unit.attack(by="weapon"), 0)
@@ -62,7 +67,7 @@ class unit_test(unittest.TestCase):
         spell = Spell("Spell name", 100, 50, 3)
         self.assertEqual(self.unit.attack(by="spell"), 0)
         self.unit.learn(spell)
-        self.assertEqual(self.unit.attack(by="spell"), 100)
+        # self.assertEqual(self.unit.attack(by="spell"), 100)
 
     def test_take_damage(self):
         self.unit.take_damage(20)
@@ -71,10 +76,13 @@ class unit_test(unittest.TestCase):
         self.assertEqual(self.unit.health, 0)
 
     def test_can_cast(self):
-        pass
-        # self.assertFalse(self.unit.can_cast())
-        # self.unit.learn(Spell('a', 10, '10', '3'))
-        # self.assertTrue(self.unit.can_cast(3)
+        self.assertFalse(self.unit.can_cast())
+        self.unit.learn(Spell('a', 10, 10, 3))
+        self.assertTrue(self.unit.can_cast(1))
+        self.assertTrue(self.unit.can_cast(3))
+        self.assertFalse(self.unit.can_cast(4))
+        self.unit.mana = 5
+        self.assertFalse(self.unit.can_cast(1))
 
 
 if __name__ == '__main__':
