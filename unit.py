@@ -4,12 +4,13 @@
 class Unit:
     """ Basic class that is common for Hero and Enemy """
 
-    def __init__(self, health, mana, mana_regeneration_rate=0):
+    def __init__(self, health, mana, mana_regeneration_rate=0, damage=0):
         self.health = health
         self._max_health = health
         self.mana = mana
         self._max_mana = mana
         self.mana_regeneration = mana_regeneration_rate
+        self.damage = 0
         self.weapon = None
         self.spell = None
 
@@ -87,3 +88,9 @@ class Unit:
         self.health -= damage_points
         if self.health < 0:
             self.health = 0
+
+    def can_cast(self, cast_range=0):
+        if (self.spell and self.spell.cast_range <= cast_range
+                and self.mana >= self.spell.mana_cost):
+            return True
+        return False

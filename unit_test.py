@@ -70,6 +70,12 @@ class unit_test(unittest.TestCase):
         self.unit.take_damage(90)
         self.assertEqual(self.unit.health, 0)
 
+    def test_can_cast(self):
+        pass
+        # self.assertFalse(self.unit.can_cast())
+        # self.unit.learn(Spell('a', 10, '10', '3'))
+        # self.assertTrue(self.unit.can_cast(3)
+
 
 if __name__ == '__main__':
     unittest.main()
