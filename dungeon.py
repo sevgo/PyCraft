@@ -60,12 +60,3 @@ class Dungeon:
             cost = random.randint(int(0.5 * damage), int(0.7 * damage))
             cast_range = random.randint(2, 4)
             self.hero.learn(Spell(name, damage, cost, cast_range))
-
-
-if __name__ == '__main__':
-    dungeon = Dungeon('level1.txt')
-    dungeon.spawn('1')
-    print(dungeon.move_hero('rigth'))
-    print(dungeon.move_hero('down'))
-    print(dungeon.move_hero('down'))
-    print(dungeon.print_map())
