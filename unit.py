@@ -30,7 +30,7 @@ class Unit:
             which is given by health If healing is successful (Our hero is not
             dead), the method should return True
         """
-        if 0 == self.health:
+        if not self.is_alive():
             return False
 
         self.health += health_points
