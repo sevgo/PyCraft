@@ -86,7 +86,7 @@ class Unit:
         return self.damage
 
     def take_damage(self, damage_points):
-        self.health -= damage_points
+        self.health -= abs(damage_points)
         if self.health < 0:
             self.health = 0
 
