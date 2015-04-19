@@ -32,6 +32,8 @@ class unit_test(unittest.TestCase):
         self.unit.health = 50
         self.unit.take_healing(100)
         self.assertEqual(self.unit.health, 100)
+        self.unit.take_healing(-50)
+        self.assertEqual(self.unit.get_health(), 100)
 
     def test_take_mana(self):
         self.unit.mana = 0

@@ -33,7 +33,7 @@ class Unit:
         if not self.is_alive():
             return False
 
-        self.health += health_points
+        self.health += abs(health_points)
         if self.health > self._max_health:
             self.health = self._max_health
 
@@ -50,7 +50,7 @@ class Unit:
         if moved:
             mana_points += self.mana_regeneration
 
-        self.mana += mana_points
+        self.mana += abs(mana_points)
         if self.mana > self._max_mana:
             self.mana = self._max_mana
 
