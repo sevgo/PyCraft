@@ -83,7 +83,7 @@ class Dungeon:
         return Enemy(health, mana, damage)
 
     def _start_fight(self):
-        Fight(self.hero, self._create_enemy())
+        return Fight(self.hero, self._create_enemy())
 
     def _find_enemy(self, cast_range):
         for d in ['up', 'down', 'left', 'rigth']:
