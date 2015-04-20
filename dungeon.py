@@ -53,7 +53,7 @@ class Dungeon:
             self.dungeon_map[new_possition[0]][new_possition[1]] = 'H'
             self.hero_possition = tuple(new_possition)
             if self.dungeon_map[new_possition[0]][new_possition[1]] == 'E':
-                self._start_fight()
+                self._start_fight(self.hero_possition)
             return True
         return False
 
@@ -82,8 +82,8 @@ class Dungeon:
             damage = random.randint(5, 15)
         return Enemy(health, mana, damage)
 
-    def _start_fight(self):
-        return Fight(self.hero, self._create_enemy())
+    def _start_fight(self, enemy_possition):
+        return Fight(self.hero, self._create_enemy(), self.hero_possition, enemy_possition)
 
     def _find_enemy(self, cast_range):
         for d in ['up', 'down', 'left', 'rigth']:
