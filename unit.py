@@ -13,8 +13,10 @@ class Unit:
         self._max_mana = mana
         self.mana_regeneration = mana_regeneration_rate
         self.damage = 0
-        self.weapon = Weapon('none', 0)
-        self.spell = Spell('none', 0, 0, 0)
+        self.weapon = None
+        self.spell = None
+        # self.weapon = Weapon('none', 0)
+        # self.spell = Spell('none', 0, float("inf"), 0)
 
     def get_health(self):
         return self.health
@@ -77,21 +79,17 @@ class Unit:
             if self.can_cast():
                 attack = spell if spell.damage >= weapon.damage else weapon
                 if attack == spell:
-                    by = 'spell'
                     self.__reduce_mana(attack.mana_cost)
-                else:
-                    by = 'weapon'
-
                 return (by, attack.damage)
         elif by.lower() == "weapon" and self.weapon:
-            return (by, weapon.damage)
+            return weapon.damage
         # elif by.lower() == "spell" and self.spell and self.can_cast(distance):
         elif by.lower() == "spell" and self.spell and self.can_cast():
             attack = spell
             self.__reduce_mana(attack.mana_cost)
-            return (by, attack.damage)
+            return attack.damage
 
-        return ('Hands', self.damage)
+        return self.damage
 
     def take_damage(self, damage_points):
         self.health -= abs(damage_points)
