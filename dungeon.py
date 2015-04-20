@@ -30,11 +30,14 @@ class Dungeon:
         self.dungeon_map[spawn_location[0]][spawn_location[1]] = 'H'
         self.hero_possition = spawn_location
 
-    def move_hero(self, direction):
+    def _new_possition(self, coordinates, direction):
         directions = {'up': (-1, 0), 'down': (1, 0),
                       'left': (0, -1), 'rigth': (0, 1)}
-        new_possition = list(map(sum, zip(*[self.hero_possition, directions[direction]])))
+        new_possition = list(map(sum, zip(*[coordinates, directions[direction]])))
+        return new_possition
 
+    def move_hero(self, direction):
+        new_possition = self._new_possition(self.hero_possition, direction)
         if (new_possition[0] >= 0 and new_possition[1] >= 0
                 and self.dungeon_map[new_possition[0]][new_possition[1]] != '#'):
             if self.dungeon_map[new_possition[0]][new_possition[1]] == 'T':
