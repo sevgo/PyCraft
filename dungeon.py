@@ -96,3 +96,9 @@ class Dungeon:
                 else:
                     break
         return False
+
+    def hero_attack(self, by):
+        if self.hero.spell and self._find_enemy(self.hero.spell.cast_range):
+            return self._start_fight()
+        else:
+            return 'Nothing in casting range ' + str(self.hero.spell.cast_range)

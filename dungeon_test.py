@@ -1,6 +1,8 @@
 import unittest
 from dungeon import Dungeon
 from unit import Unit
+from spell import Spell
+from fight import Fight
 import os
 
 
@@ -80,9 +82,17 @@ class dungeon_test(unittest.TestCase):
     def test_find_enemy(self):
         self.dungeon.hero_possition = (3, 3)
         self.dungeon.dungeon_map[3][3] = 'H'
-        print(self.dungeon.print_map())
-        print(self.dungeon._find_enemy(2))
 
+    def test_hero_attack(self):
+        hero = Unit(100, 100, 5)
+        hero.learn(Spell('a', 10, 10, 2))
+        self.dungeon.spawn(hero)
+        self.dungeon.move_hero('down')
+        self.dungeon.move_hero('down')
+        self.assertEqual('Nothing in casting range 2',
+                         self.dungeon.hero_attack(by="spell"))
+        self.dungeon.move_hero('down')
+        self.assertIsInstance(self.dungeon.hero_attack(by='spell'), Fight)
 
 if __name__ == '__main__':
     unittest.main()
