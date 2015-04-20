@@ -5,11 +5,19 @@ from spell import Spell
 
 
 class Fight():
-    def __init__(self, hero, enemy):
+    def __init__(self, hero, enemy, hero_possition, enemy_possition):
         self.hero = hero
+        self.hero_possition = hero_possition
         # hero = Hero()
         self.enemy = enemy
+        self.enemy_possition = enemy_possition
         # enemy = Enemy()
+
+    def _move_hero(self):
+        pass
+
+    def _move_enemy(self):
+        pass
 
     def start(self):
         start_battle = "A fight is started between our Hero(health={}, mana={})"
@@ -23,12 +31,15 @@ class Fight():
                 self.enemy.take_damage(damage)
                 print(spell.format(self.hero.spell.name,
                                    self.hero.spell.damage, self.enemy.health))
-            elif self.hero.weapon != None:
+            elif self.hero.weapon != None and self.hero_possition == self.enemy_possition:
                 weapon = "Hero hits with {} for {} dmg. Enemy health is {}"
                 damage = self.hero.attack(by='weapon')
                 self.enemy.take_damage(damage)
                 print(weapon.format(self.hero.weapon.name,
                                     self.hero.weapon.damage, self.enemy.health))
+            else:
+                self.move_hero()
+
             if enemy.is_alive():
                 if self.enemy.can_cast():
                     spell = "Enemy casts a {}, hits hero for {} dmg. Hero health is {}"
@@ -36,17 +47,19 @@ class Fight():
                     self.hero.take_damage(damage)
                     print(spell.format(self.hero.spell.name,
                                        self.hero.spell.damage, self.enemy.health))
-                elif self.enemy.weapon != None:
+                elif self.enemy.weapon != None and self.hero_possition == self.enemy_possition:
                     weapon = "Enemy hits with {} for {} dmg. Hero health is {}"
                     damage = self.enemy.attack(by='weapon')
                     self.hero.take_damage(damage)
                     print(weapon.format(self.hero.weapon.name,
                                         self.hero.weapon.damage, self.enemy.health))
-                else:
+                elif self.hero_possition == self.enemy_possition:
                     hands = "Enemy hits hero for {} dmg. Hero health is {}."
                     damage = self.enemy.attack()
                     self.hero.take_damage(damage)
                     print(hands.format(self.enemy.damage, self.hero.health))
+                else:
+                    self.move_enemy()
 
         return self.hero if self.hero.is_alive() else self.enemy
 
