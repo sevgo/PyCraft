@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+from spell import Spell
 
 
 class Unit:
@@ -12,7 +13,7 @@ class Unit:
         self.mana_regeneration = mana_regeneration_rate
         self.damage = 0
         self.weapon = None
-        self.spell = None
+        self.spell = Spell('none', 0, 0, 0)
 
     def get_health(self):
         return self.health
