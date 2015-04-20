@@ -44,49 +44,47 @@ class unit_test(unittest.TestCase):
 
     def test_equip_weapon(self):
         weapon = Weapon("Weapon name", 20)
-        self.assertEqual(self.unit.weapon, None)
         self.unit.equip(weapon)
         self.assertEqual(self.unit.weapon, weapon)
 
     def test_learn_spell(self):
         spell = Spell("Spell name", 100, 50, 3)
-        self.assertEqual(self.unit.spell, None)
         self.unit.learn(spell)
         self.assertEqual(self.unit.spell, spell)
 
     def test_attack_without_weapon_or_spell(self):
-        self.assertEqual(self.unit.attack(), 0)
+        self.assertEqual(self.unit.attack()[1], 0)
 
     def test_attack_with_better_weapon(self):
         spell = Spell("S", 10, 20, 5)
         weapon = Weapon('W', 50)
         self.unit.learn(spell)
         self.unit.equip(weapon)
-        self.assertEqual(self.unit.attack(), 50)
+        self.assertEqual(self.unit.attack()[1], 50)
 
     def test_attack_with_equal_weapon_and_spell(self):
         spell = Spell("S", 50, 50, 5)
         weapon = Weapon('W', 50)
         self.unit.learn(spell)
         self.unit.equip(weapon)
-        self.assertEqual(self.unit.attack(), 50)
+        self.assertEqual(self.unit.attack()[1], 50)
         self.assertEqual(self.unit.mana, 50)
 
-    def test_cant_attack_with_weapon_from_distance(self):
-        weapon = Weapon('W', 50)
-        self.unit.equip(weapon)
-        # self.assertEqual(self.unit.attack(distance=2), 0)
-        self.assertEqual(self.unit.attack(), 0)
+    # def test_cant_attack_with_weapon_from_distance(self):
+    #     weapon = Weapon('W', 50)
+    #     self.unit.equip(weapon)
+    #     # self.assertEqual(self.unit.attack(distance=2), 0)
+    #     self.assertEqual(self.unit.attack()[1], 0)
 
     def test_attack_by_weapon(self):
         weapon = Weapon("Weapon name", 20)
-        self.assertEqual(self.unit.attack(by="weapon"), 0)
+        self.assertEqual(self.unit.attack(by="weapon")[1], 0)
         self.unit.equip(weapon)
-        self.assertEqual(self.unit.attack(by="weapon"), 20)
+        self.assertEqual(self.unit.attack(by="weapon")[1], 20)
 
     def test_attack_by_spell(self):
         spell = Spell("Spell name", 100, 50, 3)
-        self.assertEqual(self.unit.attack(by="spell"), 0)
+        self.assertEqual(self.unit.attack(by="spell")[1], 0)
         self.unit.learn(spell)
         # self.assertEqual(self.unit.attack(by="spell"), 100)
 

@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 from spell import Spell
+from weapon import Weapon
 
 
 class Unit:
@@ -12,7 +13,7 @@ class Unit:
         self._max_mana = mana
         self.mana_regeneration = mana_regeneration_rate
         self.damage = 0
-        self.weapon = None
+        self.weapon = Weapon('none', 0)
         self.spell = Spell('none', 0, 0, 0)
 
     def get_health(self):
@@ -76,18 +77,21 @@ class Unit:
             if self.can_cast():
                 attack = spell if spell.damage >= weapon.damage else weapon
                 if attack == spell:
+                    by = 'spell'
                     self.__reduce_mana(attack.mana_cost)
+                else:
+                    by = 'weapon'
 
-                return attack.damage
+                return (by, attack.damage)
         elif by.lower() == "weapon" and self.weapon:
-            return weapon.damage
+            return (by, weapon.damage)
         # elif by.lower() == "spell" and self.spell and self.can_cast(distance):
         elif by.lower() == "spell" and self.spell and self.can_cast():
             attack = spell
             self.__reduce_mana(attack.mana_cost)
-            return attack.damage
+            return (by, attack.damage)
 
-        return self.damage
+        return ('Hands', self.damage)
 
     def take_damage(self, damage_points):
         self.health -= abs(damage_points)
