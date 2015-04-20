@@ -65,12 +65,14 @@ class Unit:
     def __reduce_mana(self, reduce_mana_by):
         self.mana -= reduce_mana_by
 
-    def attack(self, by=None, distance=0):
+    # def attack(self, by=None, distance=0):
+    def attack(self, by=None):
         spell = self.spell
         weapon = self.weapon
 
         if by is None:
-            if self.can_cast(distance):
+            # if self.can_cast(distance):
+            if self.can_cast():
                 attack = spell if spell.damage >= weapon.damage else weapon
                 if attack == spell:
                     self.__reduce_mana(attack.mana_cost)
@@ -78,7 +80,8 @@ class Unit:
                 return attack.damage
         elif by.lower() == "weapon" and self.weapon:
             return weapon.damage
-        elif by.lower() == "spell" and self.spell and self.can_cast(distance):
+        # elif by.lower() == "spell" and self.spell and self.can_cast(distance):
+        elif by.lower() == "spell" and self.spell and self.can_cast():
             attack = spell
             self.__reduce_mana(attack.mana_cost)
             return attack.damage
@@ -90,8 +93,9 @@ class Unit:
         if self.health < 0:
             self.health = 0
 
-    def can_cast(self, distance=0):
-        if (self.spell and self.spell.cast_range >= distance
-                and self.mana >= self.spell.mana_cost):
+    def can_cast(self):
+        # if (self.spell and self.spell.cast_range >= distance
+        #         and self.mana >= self.spell.mana_cost):
+        if (self.spell and self.mana >= self.spell.mana_cost):
             return True
         return False
