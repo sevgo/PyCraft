@@ -7,7 +7,7 @@ import os
 class dungeon_test(unittest.TestCase):
     def setUp(self):
         self.dungeon_map = [
-            ['S', '.', '#', '#', '.', '.', '.', '.', '.', 'T'],
+            ['.', 'S', '#', '#', '.', '.', '.', '.', '.', 'T'],
             ['#', 'T', '#', '#', '.', '.', '#', '#', '#', '.'],
             ['#', '.', '#', '#', '#', 'E', '#', '#', '#', 'E'],
             ['#', '.', 'E', '.', '.', '.', '#', '#', '#', '.'],
@@ -25,16 +25,16 @@ class dungeon_test(unittest.TestCase):
         self.assertEqual(self.dungeon.dungeon_map, self.dungeon_map)
 
     def test_find_item_coordinates(self):
-        self.assertEqual(self.dungeon._find_item_coordinates('S'), (0, 0))
-        self.assertEqual(self.dungeon._find_item_coordinates('G'), (9, 4))
+        self.assertEqual(self.dungeon._find_item_coordinates('S'), (0, 1))
+        self.assertEqual(self.dungeon._find_item_coordinates('G'), (4, 9))
 
     def test_spawn(self):
         hero = Unit(100, 100, 5)
         self.dungeon.spawn(hero)
-        self.assertEqual(self.dungeon.dungeon_map[0][0], 'H')
+        self.assertEqual(self.dungeon.dungeon_map[0][1], 'H')
 
     def test_prin_map(self):
-        map_string = """S.##.....T
+        map_string = """.S##.....T
 #T##..###.
 #.###E###E
 #.E...###.
@@ -45,12 +45,14 @@ class dungeon_test(unittest.TestCase):
         hero = Unit(100, 100, 5)
         self.dungeon.spawn(hero)
         self.assertFalse(self.dungeon.move_hero('up'))
+        self.assertTrue(self.dungeon.move_hero('left'))
+        # self.assertTrue(self.dungeon.move_hero('rigth'))
         self.assertTrue(self.dungeon.move_hero('rigth'))
         self.assertTrue(self.dungeon.move_hero('down'))
         self.assertTrue(self.dungeon.move_hero('down'))
         self.assertEqual(self.dungeon.hero_possition, (2, 1))
         self.assertEqual(self.dungeon.dungeon_map[1][1], '.')
-        self.dungeon_map[0][0] = '.'
+        self.dungeon_map[0][1] = '.'
         self.dungeon_map[1][1] = '.'
         self.dungeon_map[2][1] = 'H'
         self.assertEqual(self.dungeon.dungeon_map, self.dungeon_map)
@@ -74,6 +76,12 @@ class dungeon_test(unittest.TestCase):
         self.assertEqual(enemy.health, 100)
         self.assertEqual(enemy.mana, 100)
         self.assertEqual(enemy.damage, 100)
+
+    def test_find_enemy(self):
+        self.dungeon.hero_possition = (3, 3)
+        self.dungeon.dungeon_map[3][3] = 'H'
+        print(self.dungeon.print_map())
+        print(self.dungeon._find_enemy(2))
 
 
 if __name__ == '__main__':

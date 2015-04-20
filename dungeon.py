@@ -19,7 +19,7 @@ class Dungeon:
     def _find_item_coordinates(self, item):
         for i in range(len(self.dungeon_map)):
             if item in self.dungeon_map[i]:
-                return (self.dungeon_map[i].index(item), i)
+                return (i, self.dungeon_map[i].index(item))
 
     def print_map(self):
         return '\n'.join([''.join(x) for x in self.dungeon_map])
@@ -36,10 +36,16 @@ class Dungeon:
         new_possition = list(map(sum, zip(*[coordinates, directions[direction]])))
         return new_possition
 
+    def _can_move(self, coordinates):
+        return (coordinates[0] < len(self.dungeon_map)
+                and coordinates[1] < len(self.dungeon_map[0])
+                and coordinates[0] >= 0
+                and coordinates[1] >= 0
+                and self.dungeon_map[coordinates[0]][coordinates[1]] != '#')
+
     def move_hero(self, direction):
         new_possition = self._new_possition(self.hero_possition, direction)
-        if (new_possition[0] >= 0 and new_possition[1] >= 0
-                and self.dungeon_map[new_possition[0]][new_possition[1]] != '#'):
+        if self._can_move(new_possition):
             if self.dungeon_map[new_possition[0]][new_possition[1]] == 'T':
                 treasure = random.choice(self.treasures)
                 self._found_treasure(treasure)
@@ -78,3 +84,15 @@ class Dungeon:
 
     def _start_fight(self):
         Fight(self.hero, self._create_enemy())
+
+    def _find_enemy(self, cast_range):
+        for d in ['up', 'down', 'left', 'rigth']:
+            pos = self.hero_possition
+            for i in range(cast_range):
+                pos = self._new_possition(pos, d)
+                if self._can_move(pos):
+                    if self.dungeon_map[pos[0]][pos[1]] == 'E':
+                        return pos
+                else:
+                    break
+        return False
