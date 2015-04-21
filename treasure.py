@@ -2,20 +2,21 @@
 import json
 from weapon import Weapon
 from spell import Spell
-from random import choice, randint
+from random import choice
 
 
 class Treasure:
 
     @staticmethod
     def load_treasures(fpath):
-        with open(fpath, 'r') as fd:
+        with open(fpath, "r") as fd:
             treasures_dict = json.load(fd)
 
-        return treasures_dict
+        return Treasure(treasures_dict)
 
-    def __init__(self, fpath="treasures.json"):
-        self.treasures = Treasure.load_treasures(fpath)
+    def __init__(self, treasure_dictionary):
+        # self.treasures = Treasure.load_treasures(treasure_dictionary)
+        self.treasures = treasure_dictionary
         self.weapons = self.treasures['weapons']
         self.spells = self.treasures['spells']
         self.health_potions = self.treasures['health']

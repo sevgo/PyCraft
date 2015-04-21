@@ -8,7 +8,7 @@ from spell import Spell
 class Test_Treasure(unittest.TestCase):
 
     def setUp(self):
-        self.t = Treasure("test.json")
+        self.t = Treasure.load_treasures("test.json")
 
     def test_is_treasure(self):
         self.assertIsInstance(self.t, Treasure)
