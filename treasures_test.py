@@ -7,13 +7,22 @@ from spell import Spell
 
 class Test_Treasure(unittest.TestCase):
 
-    def test_get_weapon(self):
-       t = Treasure()
-       self.assertIsInstance(t.get_weapon(), Weapon)
-       self.assertIsInstance(t.get_spell(), Spell)
-       weapon = t.get_spell()
-       self.assertNotEqual(weapon.name, 'axe')
+    def setUp(self):
+        self.t = Treasure("test.json")
 
+    def test_is_treasure(self):
+        self.assertIsInstance(self.t, Treasure)
+
+    def test_get_weapon(self):
+        self.assertIsInstance(self.t._get_random_weapon(), Weapon)
+        weapon = self.t._get_random_spell()
+        self.assertNotEqual(weapon.name, 'axe')
+        self.assertNotEqual(weapon.name, 'pike')
+        self.assertNotEqual(weapon.name, 'sword')
+
+    def test_get_spell(self):
+        self.assertIsInstance(self.t._get_random_spell(), Spell)
+        self.assertIsInstance(self.t._get_random_spell().name, str)
 
 if __name__ == "__main__":
     unittest.main()

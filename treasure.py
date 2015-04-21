@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import json
 from weapon import Weapon
 from spell import Spell
 from random import choice, randint
@@ -6,49 +7,45 @@ from random import choice, randint
 
 class Treasure:
 
-    WEAPON_NAMES = ['axe', 'sword', 'pike', 'bow']
-    SPELLS = ['fireball', 'meteor_shower', 'lightning', 'emp']
-    POINTS = [10, 15, 20, 25, 30, 35, 40, 45, 50]
-    HOW_MUCH_POTIONS = 5
-    def __init__(self):
-        self.weapons = self.load_weapons()
-        self.spells = self.load_spells()
-        self.health_potions = self.load_potions(Treasure.HOW_MUCH_POTIONS)
-        self.mana_potions =self.load_potions(5)
+    @staticmethod
+    def load_treasures(fpath):
+        with open(fpath, 'r') as fd:
+            treasures_dict = json.load(fd)
 
-    def load_weapons(self):
-        weapons_list = []
-        for element in Treasure.WEAPON_NAMES:
-            weapons_list.append(Weapon(element, choice(Treasure.POINTS)))
+        return treasures_dict
 
-        return weapons_list
+    def __init__(self, fpath="treasures.json"):
+        self.treasures = Treasure.load_treasures(fpath)
+        self.weapons = self.treasures['weapons']
+        self.spells = self.treasures['spells']
+        self.health_potions = self.treasures['health']
+        self.mana_potions = self.treasures['mana']
 
-    def load_spells(self):
-        spells_list = []
-        for element in Treasure.SPELLS:
-            spells_list.append(Spell(element,choice(Treasure.POINTS),
-                                     choice(Treasure.POINTS), randint(1, 5)))
+    def __random_key(self, dict_obj):
+        return choice(list(dict_obj.keys()))
 
-        return spells_list
+    def _get_random_weapon(self):
+        name = self.__random_key(self.weapons)
 
-    def load_potions(self, potion_counts):
-        potions_list = []
-        for i in range(0, potion_counts):
-            potions_list.append(choice(Treasure.POINTS))
-        return potions_list
+        return Weapon(name, self.weapons[name])
 
-    def get_weapon(self):
-        return choice(self.weapons)
+    def _get_random_spell(self):
+        name = self.__random_key(self.spells)
+        damage, mana_cost, cost_range = self.spells[name]
 
-    def get_spell(self):
-        return choice(self.spells)
+        return Spell(name, damage, mana_cost, cost_range)
 
+    def _get_random_health(self):
+        return choice(self.health_potions)
 
+    def _get_random_mana(self):
+        return choice(self.mana_potions)
+
+    def get_treasure(self):
+        return choice([self._get_random_weapon(), self._get_random_mana(),
+                       self._get_random_spell(), self._get_random_health()])
 
 if __name__ == "__main__":
     t = Treasure()
-    w = t.get_spell()
-    for element in t.spells:
-        print(element.name)
-        print(element.damage)
-        print(element.mana_cost)
+    pick_up = t.get_treasure()
+    print(type(pick_up))
